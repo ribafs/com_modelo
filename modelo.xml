@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.0" type="component" method="upgrade">
+     <name>modelo</name>
+     <author>Ribamar FS</author>
+	<creationDate>Outubro 2017</creationDate>
+     <version>1.0.0</version>
+     <description>
+		<![CDATA[
+		<div>
+        <h1>Componente Modelo - Cadastro de Portfolios</h1>
+        <p>Será feito o upload ds imagens para images/portfolio<br>
+        - Primeiro cadastrar todas as imagens com suas descrições no componente<br>
+        - Depois configurar o módulo para exibir o portfolio numa posição tipo portfolio<br>
+        <br>
+        As descrições devem ser pequenas, com o máximo de 70 caracteres.<br>
+        As fotos devem ter a melhor qualidade possível.<br>
+		Cadastro de portfolios no backend. Para ser acessado pelo módulo mod_ribafs_portfolio.<br>
+        Caso necessário crie novos módulos: Extensões - Módulos - Novo e mude a categoria.
+        </p>
+        </div>
+		]]>
+	 </description>
+
+     <files>
+          <filename>leiame.txt</filename>
+          <filename>fluxo.txt</filename>
+     </files>
+
+	 <install>
+	      <sql>
+	           <file driver="mysql" charset="utf8">install.sql</file>
+	      </sql>
+	 </install>
+
+	 <uninstall>
+	      <sql>
+	           <file driver="mysql" charset="utf8">uninstall.sql</file>
+	      </sql>
+	 </uninstall>
+
+     <administration>
+         <menu>Modelo</menu>
+
+         <files folder="admin">
+              <filename component="modelo">modelo.php</filename>         
+              <filename>modelodb.php</filename>
+              <filename>modelo_insert.php</filename>
+              <filename>modelo_insertdb.php</filename>
+              <filename>modelo_update.php</filename>
+              <filename>modelo_updatedb.php</filename>
+              <filename>modelo_deletedb.php</filename>
+              <filename>install.sql</filename>
+              <filename>uninstall.sql</filename>
+	          <filename>index.html</filename>	
+         </files>
+	     <languages>
+		    <language tag="pt-BR">admin/language/pt-BR/pt-BR.com_modelo.ini</language>
+	     </languages>
+    </administration>
+</extension>

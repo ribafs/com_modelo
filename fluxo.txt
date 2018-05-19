@@ -1,0 +1,75 @@
+Mostrando abaixo como as informações caminham neste componente
+
+Todo o fluxo é controlado por este switch
+
+switch( JRequest::getVar( 'task' )) { 
+    case 'add': 
+        addEntry(); 
+        break; 
+    case 'insert': 
+        insertEntry(); 
+        break; 
+    case 'edit': 
+        editEntry(); 
+        break; 
+    case 'update': 
+        updateEntry(); 
+        break; 
+    case 'delete': 
+        deleteEntry(); 
+        break; 
+    case 'upload': 
+        uploadEntry(); 
+        break; 
+    default: 
+        displayEntries(); 
+        break; 
+} 
+
+Esta versão do componente, como forma de aprender mais sobre a programação no Joomla, resolvi quebrar o único arquivo em vários arquivos, visto que o código tem essa característica. Ao invés de ter o switch inicial, o fluxo das informações será controlado diretamente através dos arquivos:
+- ribafs_portfolio.php (ponto de entrada, que contém apenas o form do displayEntries)
+- ribafs_portfoliodb.php (apenas o código do select do form acima)
+- ribafs_portfolio_insert.php (código do form insertEntriy)
+- ribafs_portfolio_insertdb.php (consulta do form acima)
+- ribafs_portfolio_update.php (código do form updateEntry)
+- ribafs_portfolio_updatedb.php (consulta do form acima)
+- ribafs_portfolio_deletedb.php (consulta do botão delete no displayEntries)
+
+Cada um dos arquivos acima sem db inclui seu respectivo arquivo contendo db. Exemplo:
+No ribafs_portfolio_insert.php existe um include para o ribafs_portfolio_insertdb.php
+
+A ideia foi aprender e simplificar manutenções, além de separar em duas camadas todas as etapas, em arquivos com o HTML e arquivos com o código PHP.
+Cada etapa tem dois arquivos, um para a view/html e outro para o model/php/banco.
+
+Os arquivos sem db contém a parte da view/html e os com db são o model.
+No componente original o displayEntries é o default chamado e dele se chama os demais.
+Ainda criei mais um arquivo que foi o ribafs_portfoliodb.php, que contém apenas a consulta ao banco da função original displayEntries() e adicionarei um include para ele no ribafs_portfolio.php.
+
+Todas as funções do componente original agora estão em um arquivo separado, sem contar que a função displayEntries foi dividida em dois arquivos, para separar a view/html do model/php/banco.
+
+Quando instalamos o componente e o executamos ele chama o arquivo ribafs_portfolio.php, indicado no XML aqui:
+         <files folder="admin">
+              <filename component="ribafs_portfolio">ribafs_portfolio.php</filename>         
+
+Quando o arquivo acima é chamado ele inicia a execução chamando o switch.
+Veja que no switch é chamada por defualt a função displayEntries().
+
+A função displayEntries():
+Mostra uma GRID central exibida logo que o componente é executado.
+- Primeiro executa uma consulta SQL na tabela #__ribafs_portfolio trazendo todos os registros e ordenando pela imagem.
+- Depois mostra uma tabela HTML contendo as classes: uma container, duas row e um span7 em cada row. A tabela mostra:
+
+Títulos das colunas: Categoria, Imagem e Descrição
+E mostra abaixo seus valores de campos, juntamente com os botões Alterar, Excluir e abaixo o botão Novo.
+
+Daqui se controla todas as ações do componente.
+
+Ao clicar no botão Alterar se chama o case update que chama a função updateEntry().
+A função updateEntry() chama a função editEntry(). Para que isso ocorra nesta mesma ordem, inserimos bem no início do ribafs_portfolio_update.php um include para o ribafs_portfolio_updatedb.php e assim será executada a função deste, que é a function updateEntry().
+
+Ao clicar no botão Excluir se chama o case delete que chama a função deleteEntry().
+A função deleteEntry() encontra-se no arquivo ribafs_portfolio_deletedb.php
+
+Ao clicar no botão Novo chama o case add que chama a função addEntry().
+
+
