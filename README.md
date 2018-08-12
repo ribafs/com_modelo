@@ -1,7 +1,4 @@
-## Componente para Joomla 3 para Cadastro de Portfolios
-
-# Dizendo não para o lado negro da força (MS) mudei para o GitLab. Manterei os arquivos aqui em respeito aos usuários e ao antigo GitHub mas estarei atualizando somente no GitLab daqui pra frente.
-https://gitlab.com/ribafs/com_modelo
+# Componente para Joomla 3 para Cadastro de Portfolios
 
 Este componente é bem simples em se comparando com um componente que usa MVC no Joomla.
 Este usa apenas duas camadas, a view/html e o model/banco de dados. Cada camada em um arquivos eparado.
